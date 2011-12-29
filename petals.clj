@@ -57,7 +57,6 @@ Run with
 (defn face [n] (get faces n 1))
 (defn throw-dice [] (repeatedly 5 #(rand-int 6)))
 
-
 (defn format-faces [faces-nums]
 	"Get face strings from faces-nums and aligns them horisontally."
 	(map 
@@ -69,12 +68,6 @@ Run with
 	(println)
 	(println (clojure.string/join "\n" (format-faces faces-nums))))
 
-(defn parse-input [answer]
-		"Get the users answer and returns whether it's correct."
-		(if (= (prompt-read "Whats the answer to this roll?") (str answer))
-			(do (println "Correct!") true)
-			(do (printfln "Nope! The correct answer is %d." answer) false)))
-
 (defn print-status [n]
 	(if (> n 0)
 		(printfln "%d correct answer(s) in a row." n))
@@ -84,9 +77,16 @@ Run with
 (defn correct-answer [faces]
 	(reduce + (map num-petals faces)))
 
+(defn get-answer [correct-answer]
+	"Prompts the user for the answer and returns whether it's correct."
+	(if (= (prompt-read "Whats the answer to this roll?") (str correct-answer))
+		(do (println "Correct!") true)
+		(do (printfln "Nope! The correct answer is %d." correct-answer) false)))
+
 (defn ask-question [faces]
+	"Prints the question, gets the answer and returns whether it's correct."
 	(print-faces faces)
-	(parse-input (correct-answer faces)))
+	(get-answer (correct-answer faces)))
 
 (defn main [n]
 	(print-status n)
