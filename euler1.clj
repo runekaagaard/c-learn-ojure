@@ -5,6 +5,8 @@
     (any? true?
         (map #(zero? (mod n %)) col)))
 
-(println 
+(defn sum-of-multiples [n col]
     (apply + 
-        (filter #(is-mult-of % [3 5]) (range 3 1000))))
+        (filter #(is-mult-of % col) (range n))))
+
+(println (sum-of-multiples 1000 [3 5]))
